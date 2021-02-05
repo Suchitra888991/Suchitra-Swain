@@ -1,8 +1,7 @@
 #include<stdio.h>
 int main()
 {
-char  name;
-printf("Enter your name");
-scanf("%s",&name);
-return 0;
+printf(“Suchitra Swain”);
+return 0
 }
+
