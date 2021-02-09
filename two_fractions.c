@@ -14,7 +14,7 @@ int gcd(int a, int b)
  	      gcd=i;
         }
     }
-    return gcd;
+   return gcd;
 }
 void output(struct fractions x, struct fractions y)
 {
