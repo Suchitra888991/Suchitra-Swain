@@ -20,7 +20,7 @@ void output(struct fractions x, struct fractions y)
 {
     int a=(x.a*y.b)+(x.b*y.a);
     int b=x.b*y.b;
-    printf("The sum is %d / %d \n",a/gcd(a,b),b/gcd(a,b));
+    printf("The sum of %d/%d and %d/%d is %d/%d \n",x.a,x.b,y.a,y.b,a/gcd(a,b),b/gcd(a,b));
     printf("\n");
 }
 int main()
@@ -33,3 +33,4 @@ int main()
     output(x,y);
     return 0;
 }
+
