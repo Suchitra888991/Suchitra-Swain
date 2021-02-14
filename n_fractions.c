@@ -6,13 +6,14 @@ struct fractions
 };
 typedef struct fractions f;
 
+int gcd(int , int );
+
 struct fractions* input(struct fractions a[], int n)
 {
     for(int i = 0; i < n ; i++)
     {
-        printf("Enter fraction %d: ", i+1);
-        scanf("%d%d", &a[i].numerator
-, &a[i].denominator);
+        printf("Enter fraction %d:", i+1);
+        scanf("%d%d", &a[i].numerator, &a[i].denominator);
     }
     return a;
 }
@@ -20,25 +21,22 @@ struct fractions* input(struct fractions a[], int n)
 struct fractions* addition(struct fractions a[], int n)
 {
     f sum;
-    sum.numerator= 0;
+    sum.numerator = 0;
     sum.denominator = a[0].denominator;
     for(int i = 0; i < n ; i++)
     {
-        sum.numerator= sum.numerator+ (a[i].numerator) * (sum.denominator/a[i].denominator);
         sum.denominator = ((a[i].denominator * sum.denominator) / (gcd(a[i].denominator, sum.denominator)));
     }
+    
+    for(int i = 0; i < n ; i++)
+    {
+        sum.numerator = sum.numerator + (a[i].numerator) * (sum.denominator/a[i].denominator);
+    }
+    
     int hcf = gcd(sum.numerator, sum.denominator);
-    sum.numerator= sum.numerator/ hcf;
+    sum.numerator = sum.numerator / hcf;
     sum.denominator = sum.denominator / hcf;
     printf("The sum is %d/%d\n", sum.numerator, sum.denominator);
-}
-
-int gcd(int a, int b)
-{
-    if(a == 0)
-        return b;
-    else
-        return gcd(b%a, a);
 }
 
 int main()
@@ -51,4 +49,12 @@ int main()
     input(a, n);
     addition(a, n);
     return 0;
+}
+
+int gcd(int a, int b)
+{
+    if(a == 0)
+        return b;
+    else
+        return gcd(b%a, a);
 }
