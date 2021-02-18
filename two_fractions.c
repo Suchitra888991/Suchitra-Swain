@@ -5,6 +5,8 @@ struct fractions
  int numerator,denominator;
 };
 
+void output(struct fractions x, struct fractions y, struct fractions z);
+
 struct fractions input1(struct fractions x)
 {
    printf("Enter the fraction 1:");
