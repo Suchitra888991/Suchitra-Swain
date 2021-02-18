@@ -7,6 +7,7 @@ struct fractions
 typedef struct fractions f;
 
 int gcd(int , int );
+void output(struct fractions sum);
 
 struct fractions* input(struct fractions a[], int n)
 {
@@ -36,6 +37,11 @@ struct fractions* addition(struct fractions a[], int n)
     int hcf = gcd(sum.numerator, sum.denominator);
     sum.numerator = sum.numerator / hcf;
     sum.denominator = sum.denominator / hcf;
+    output(sum);
+}
+
+void output(f sum)
+{
     printf("The sum is %d/%d\n", sum.numerator, sum.denominator);
 }
 
