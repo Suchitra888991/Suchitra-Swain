@@ -5,20 +5,15 @@ struct fractions
  int numerator,denominator;
 };
 
-void output(struct fractions x, struct fractions y);
+void output(struct fractions x, struct fractions y, struct fractions z);
 
-struct fractions input1(struct fractions x)
+struct fractions input()
 {
-   printf("Enter the fraction 1:");
+   struct fractions x;
    scanf("%d%d",&x.numerator,&x.denominator);
    return x;
 }
-struct fractions input2(struct fractions y)
-{
-   printf("Enter the fraction 2:");
-   scanf("%d%d",&y.numerator,&y.denominator);
-   return y;
-}
+
 int gcd(int a, int b)
 {
    int gcd;
@@ -43,17 +38,20 @@ struct fractions addition(struct fractions x, struct fractions y)
     return c;
 }
 
-void output(struct fractions x, struct fractions y)
+void output(struct fractions x, struct fractions y, struct fractions z)
 {
-    printf("The sum of %d/%d and %d/%d is %d/%d \n",x.numerator,x.denominator,y.numerator,y.denominator,addition(x, y).numerator,addition(x, y).denominator);
+    printf("The sum of %d/%d and %d/%d is %d/%d \n",x.numerator,x.denominator, y.numerator,y.denominator, z.numerator,z.denominator);
 }
 
 int main()
 {
-    struct fractions x,y;
-    x = input1(x);
-    y = input2(y);
-    output(x,y);
+    struct fractions x,y,z;
+    printf("Enter the fraction 1:");
+    x = input();
+    printf("Enter the fraction 2:");
+    y = input();
+    z = addition(x, y);
+    output(x,y,z);
     return 0;
 }
 
