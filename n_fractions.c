@@ -1,66 +1,108 @@
 //WAP to find the sum of n fractions.
 #include<stdio.h>
-struct fractions
+struct sum
 {
     int numerator, denominator;
 };
-typedef struct fractions f;
+typedef struct sum sum;
+
+struct fractions
+{
+    sum sum;
+    int k;
+    int numerator[100];
+    int denominator[100];
+};
+typedef struct fractions fractions;
 
 int gcd(int , int );
-void output(struct fractions sum);
 
-struct fractions* input(struct fractions a[], int n)
+void output(fractions sum);
+
+fractions input_one_fraction()
 {
-    for(int i = 0; i < n ; i++)
+    fractions a;
+    scanf("%d", &a.k);
+    for(int i=0;i<a.k;i++)
     {
-        printf("Enter fraction %d:", i+1);
-        scanf("%d%d", &a[i].numerator, &a[i].denominator);
+        scanf("%d%d", &a.numerator[i], &a.denominator[i]);
     }
     return a;
 }
 
-struct fractions* addition(struct fractions a[], int n)
+void input_n_fractions(int n, fractions a[n])
 {
-    f sum;
-    sum.numerator = 0;
-    sum.denominator = a[0].denominator;
     for(int i = 0; i < n ; i++)
     {
-        sum.denominator = ((a[i].denominator * sum.denominator) / (gcd(a[i].denominator, sum.denominator)));
+        a[i] = input_one_fraction();
     }
-    
-    for(int i = 0; i < n ; i++)
-    {
-        sum.numerator = sum.numerator + (a[i].numerator) * (sum.denominator/a[i].denominator);
-    }
-    
-    int hcf = gcd(sum.numerator, sum.denominator);
-    sum.numerator = sum.numerator / hcf;
-    sum.denominator = sum.denominator / hcf;
-    output(sum);
 }
 
-void output(f sum)
+int gcd(int num, int den)
 {
-    printf("The sum is %d/%d\n", sum.numerator, sum.denominator);
+	int gcd =1;
+	for(int i=2;i<=num && i<=den;i++)
+	{
+		if(num%i == 0 && den%i ==0)
+		{
+			gcd=i;
+		}
+	}
+	return gcd;
+}
+
+void compute_two_fractions(int n, fractions *a)
+{
+    a->sum.numerator = 0;
+    a->sum.denominator = a->denominator[0];
+    for(int i = 0; i < a->k ; i++)
+    {
+        a->sum.denominator = a->denominator[i] * a->sum.denominator;
+    }
+    
+    for(int i = 0; i < a->k ; i++)
+    {
+        a->sum.numerator = a->sum.numerator + (a->numerator[i]) * (a->sum.denominator/a->denominator[i]);
+    }
+    
+    int hcf = gcd(a->sum.numerator, a->sum.denominator);
+    a->sum.numerator = a->sum.numerator / hcf;
+    a->sum.denominator = a->sum.denominator / hcf;
+}
+
+void compute_n_fractions(int n, fractions a[n])
+{
+    for(int i=0 ; i<n ; i++)
+    {
+        compute_two_fractions(n, &a[i]);
+    }
+}
+
+void print_one_fraction(fractions frac)
+{
+    for(int i=0 ; i<frac.k ; i++)
+    {
+        printf("%d/%d + ", frac.numerator[i], frac.denominator[i]);
+    }
+    printf("= %d/%d\n", frac.sum.numerator, frac.sum.denominator);
+}
+
+void print_n_fractions(int n, fractions a[n])
+{
+    for(int i=0 ; i<n ; i++)
+    {
+        print_one_fraction(a[i]);
+    }
 }
 
 int main()
 {
-    f a[100];
+    fractions a[100];
     int n;
-    printf("Enter n: ");
     scanf("%d", &n);
-    
-    input(a, n);
-    addition(a, n);
+    input_n_fractions(n, a);
+    compute_n_fractions(n, a);
+    print_n_fractions(n, a);
     return 0;
 }
 
-int gcd(int a, int b)
-{
-    if(a == 0)
-        return b;
-    else
-        return gcd(b%a, a);
-}
